@@ -19,7 +19,7 @@ city_data = response.json()
 latitude = city_data['results'][0]['latitude']
 longitude = city_data['results'][0]['longitude']
 
-weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current="
+weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=true&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,weathercode,windspeed_10m&timezone=auto"
 response_weather = requests.get(url=weather_url)
 
 # Getting status code from the response
