@@ -13,22 +13,31 @@ def get_city_coordinates(response):
     # Getting json data from the response
     city_data = response.json()
 
+    # Checking if the city was found
+    if not city_data['results']:
+        raise ValueError("City not found")
+        result = {'latitude': None, 'longitude': None}
+    else:
+        result = city_data['results'][0]
+
     # Getting latitude and longitude from the json data
-    latitude = city_data['results'][0]['latitude']
-    longitude = city_data['results'][0]['longitude']
+    latitude = result['latitude']
+    longitude = result['longitude']
 
     return latitude, longitude
 
-def status_code(n, response):
+def status_code(name, response):
     """
-    Checks the status code of the response and prints an appropriate message.
+    Checks the HTTP status code of the response
+    and prints an appropriate message.
     """
-    # Getting status code from the response
     status = response.status_code
+
     if status == 200:
-        print(f"{n} Response Status: {status}")
-    elif status == 403:
-        print(f"{n} Response Status:{status} \nThe request was declined")
+        print(f"{name} Response Status: {status}")
+    else:
+        print(f"{name} Response Status: {status}")
+        print(f"Request failed: {response.reason}")
 
 def get_weather_data(latitude, longitude):
     """
@@ -63,14 +72,19 @@ response = get_requests(city_url)
 status_code("City", response)
 
 latitude, longitude = get_city_coordinates(response)
+if latitude is None or longitude is None:
+    print("Unable to retrieve weather data due to invalid city.")
+    exit()
+
 response_weather = get_weather_data(latitude, longitude)
 
 status_code("Weather", response_weather)
 
 weather_data = response_weather.json()
-
-current_units = weather_data["current_units"]
-current = weather_data["current"]
-
     
-print(current_weather(current, current_units))
+print(
+    current_weather(
+        weather_data["current"],
+        weather_data["current_units"]
+    )
+)
