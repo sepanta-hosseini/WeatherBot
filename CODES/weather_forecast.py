@@ -42,11 +42,19 @@ def current_weather(current, current_units):
     """
     Returns a formatted string with the current weather information.
     """
-    return f"\
-    Current temperature: {current['temperature_2m']} {current_units['temperature_2m']}\n \
-    Current humidity: {current['relative_humidity_2m']} {current_units['relative_humidity_2m']}\n \
-    Current precipitation: {current['precipitation_probability']} {current_units['precipitation_probability']}\n \
-    Current wind speed: {current['wind_speed_10m']} {current_units['wind_speed_10m']}"
+    temperature = f"{current["temperature_2m"]} {current_units["temperature_2m"]}"
+    humidity = f"{current["relative_humidity_2m"]} {current_units["relative_humidity_2m"]}"
+    precipitation = f"{current["precipitation_probability"]} {current_units["precipitation_probability"]}"
+    wind_speed = f"{current["wind_speed_10m"]} {current_units["wind_speed_10m"]}"
+    weather_code = current["weather_code"]
+
+    return f"Current Weather:\
+\nTemperature: {temperature}\
+\nHumidity: {humidity}\
+\nPrecipitation Probability: {precipitation}\
+\nWind Speed: {wind_speed}\
+\nWeather Code: {weather_code}"    
+    
 
 city = input("Enter your city: ")
 city_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
