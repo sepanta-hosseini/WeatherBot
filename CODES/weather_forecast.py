@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 
-def responses(url):
+def get_requests(url):
     return requests.get(url=url)
 
 def get_city_coordinates(response):
@@ -24,12 +24,12 @@ def status_code(n, response):
 
 def get_weather_data(latitude, longitude):
     weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,relative_humidity_2m,precipitation_probability,weather_code,wind_speed_10m&timezone=auto"
-    response_weather = responses(weather_url)
+    response_weather = get_requests(weather_url)
     return response_weather
 
 city = input("Enter your city: ")
 city_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
-response = responses(city_url)
+response = get_requests(city_url)
 
 status_code("City", response)
 
