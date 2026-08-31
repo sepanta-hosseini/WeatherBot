@@ -1,9 +1,15 @@
 import requests
 
 def get_requests(url):
+    """
+    Sends a GET request to the specified URL and returns the response.
+    """
     return requests.get(url=url)
 
 def get_city_coordinates(response):
+    """
+    Extracts the latitude and longitude from the city search response.
+    """
     # Getting json data from the response
     city_data = response.json()
 
@@ -14,6 +20,9 @@ def get_city_coordinates(response):
     return latitude, longitude
 
 def status_code(n, response):
+    """
+    Checks the status code of the response and prints an appropriate message.
+    """
     # Getting status code from the response
     status = response.status_code
     if status == 200:
@@ -22,9 +31,22 @@ def status_code(n, response):
         print(f"{n} Response Status:{status} \nThe request was declined")
 
 def get_weather_data(latitude, longitude):
+    """
+    Fetches weather data for the given coordinates.
+    """
     weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,relative_humidity_2m,precipitation_probability,weather_code,wind_speed_10m&timezone=auto"
     response_weather = get_requests(weather_url)
     return response_weather
+
+def current_weather(current, current_units):
+    """
+    Returns a formatted string with the current weather information.
+    """
+    return f"\
+    Current temperature: {current['temperature_2m']} {current_units['temperature_2m']}\n \
+    Current humidity: {current['relative_humidity_2m']} {current_units['relative_humidity_2m']}\n \
+    Current precipitation: {current['precipitation_probability']} {current_units['precipitation_probability']}\n \
+    Current wind speed: {current['wind_speed_10m']} {current_units['wind_speed_10m']}"
 
 city = input("Enter your city: ")
 city_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
@@ -42,12 +64,5 @@ weather_data = response_weather.json()
 current_units = weather_data["current_units"]
 current = weather_data["current"]
 
-temperature = f"{current["temperature_2m"]} {current_units["temperature_2m"]}"
-humidity = f"{current["relative_humidity_2m"]} {current_units["relative_humidity_2m"]}"
-precipitation = f"{current["precipitation_probability"]} {current_units["precipitation_probability"]}"
-wind_speed = f"{current["wind_speed_10m"]} {current_units["wind_speed_10m"]}"
-
-print(f"Current temperature: {temperature}")
-print(f"Current humidity: {humidity}")
-print(f"Current precipitation: {precipitation}")
-print(f"Current wind speed: {wind_speed}")
+    
+print(current_weather(current, current_units))
