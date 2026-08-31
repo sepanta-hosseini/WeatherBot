@@ -19,7 +19,7 @@ city_data = response.json()
 latitude = city_data['results'][0]['latitude']
 longitude = city_data['results'][0]['longitude']
 
-weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=true&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,weathercode,windspeed_10m&timezone=auto"
+weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,relative_humidity_2m,precipitation_probability,weather_code,wind_speed_10m&timezone=auto"
 response_weather = requests.get(url=weather_url)
 
 # Getting status code from the response
@@ -30,5 +30,7 @@ elif response_weather.status_code == 403:
 
 weather_data = response_weather.json()
 
-print(weather_data)
+current_units = weather_data["current_units"]
+current = weather_data["current"]
 
+print(f"Current temperature: {current["temperature_2m"]}{current_units["temperature_2m"]}")
