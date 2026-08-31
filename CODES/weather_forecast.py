@@ -33,4 +33,12 @@ weather_data = response_weather.json()
 current_units = weather_data["current_units"]
 current = weather_data["current"]
 
-print(f"Current temperature: {current["temperature_2m"]}{current_units["temperature_2m"]}")
+temperature = f"{current["temperature_2m"]}{current_units["temperature_2m"]}"
+humidity = f"{current["relative_humidity_2m"]}{current_units["relative_humidity_2m"]}"
+precipitation = f"{current["precipitation_probability"]}{current_units["precipitation_probability"]}"
+wind_speed = f"{current["wind_speed_10m"]}{current_units["wind_speed_10m"]}"
+
+print(f"Current temperature: {temperature}")
+print(f"Current humidity: {humidity}")
+print(f"Current precipitation: {precipitation}")
+print(f"Current wind speed: {wind_speed}")
