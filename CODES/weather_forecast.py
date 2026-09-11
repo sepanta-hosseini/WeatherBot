@@ -95,7 +95,7 @@ def current_weather(current, current_units):
         humidity,\
         precipitation,\
         wind_speed,\
-        weather_code
+        get_weather_description(weather_code)
 
 def get_weather_description(weather_code):
     """
@@ -145,6 +145,7 @@ status_code("Weather", response_weather)
 
 weather_data = response_weather.json()
 daily = weather_data["daily"]
+daily_weather(daily)
 
 temperature, humidity, precipitation, wind_speed, weather_code = current_weather(
     weather_data["current"],
@@ -157,5 +158,5 @@ print(f"Current Weather:\
 \n💧 Humidity: {humidity}\
 \n🌧 Precipitation Probability: {precipitation}\
 \n💨 Wind Speed: {wind_speed}\
-\n🌤 Weather Code: {weather_code}")
+\n🌤 Weather Description: {weather_code}")
 '''
