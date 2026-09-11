@@ -101,10 +101,22 @@ def get_weather_description(weather_code):
     """
     Returns a description of the weather based on the weather code.
     """
-    if weather_code in weather_descriptions:
-        return weather_descriptions[weather_code]
-    else:
-        return "Unknown weather code"
+    return weather_descriptions[weather_code] if weather_code in weather_descriptions else "Unknown weather code"
+
+def daily_weather(daily):
+    dates = daily["time"]
+    max_temperatures = daily["temperature_2m_max"]
+    min_temperatures = daily["temperature_2m_min"]
+    precipitation_sums = daily["precipitation_sum"]
+    weather_codes = daily["weather_code"]
+
+    for i in range(len(dates)):
+        print(f"Date: {dates[i]}\
+        \nMax Temperature: {max_temperatures[i]}°C\
+        \nMin Temperature: {min_temperatures[i]}°C\
+        \nPrecipitation: {precipitation_sums[i]} mm\
+        \nWeather Code: {get_weather_description(weather_codes[i])}\n")
+
 
 '''
     f"Current Weather:\
@@ -133,19 +145,6 @@ status_code("Weather", response_weather)
 
 weather_data = response_weather.json()
 daily = weather_data["daily"]
-
-dates = daily["time"]
-max_temperatures = daily["temperature_2m_max"]
-min_temperatures = daily["temperature_2m_min"]
-precipitation_sums = daily["precipitation_sum"]
-weather_codes = daily["weather_code"]
-
-for i in range(len(dates)):
-    print(f"Date: {dates[i]}\
-        \nMax Temperature: {max_temperatures[i]}°C\
-        \nMin Temperature: {min_temperatures[i]}°C\
-        \nPrecipitation: {precipitation_sums[i]} mm\
-        \nWeather Code: {get_weather_description(weather_codes[i])}\n")
 
 temperature, humidity, precipitation, wind_speed, weather_code = current_weather(
     weather_data["current"],
