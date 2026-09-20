@@ -85,10 +85,10 @@ def current_weather(current, current_units):
     """
     Returns a formatted string with the current weather information.
     """
-    temperature = f"{current["temperature_2m"]} {current_units["temperature_2m"]}"
-    humidity = f"{current["relative_humidity_2m"]} {current_units["relative_humidity_2m"]}"
-    precipitation = f"{current["precipitation_probability"]} {current_units["precipitation_probability"]}"
-    wind_speed = f"{current["wind_speed_10m"]} {current_units["wind_speed_10m"]}"
+    temperature = f"{current['temperature_2m']} {current_units['temperature_2m']}"
+    humidity = f"{current['relative_humidity_2m']} {current_units['relative_humidity_2m']}"
+    precipitation = f"{current['precipitation_probability']} {current_units['precipitation_probability']}"
+    wind_speed = f"{current['wind_speed_10m']} {current_units['wind_speed_10m']}"
     weather_code = current["weather_code"]
 
     return temperature,\
